@@ -1,0 +1,77 @@
+// generator e datasource mantidos conforme seu padrão
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Status {
+  PENDING
+  SENT
+  DELIVERED
+  FAILED
+}
+
+model User {
+  id            String            @id @default(uuid())
+  email         String            @unique
+  phone         String?
+  preferences   UserPreferences[]
+  notifications Notification[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model NotificationTemplate {
+  id            String         @id @default(uuid())
+  slug          String         @unique
+  channel       String
+  subject       String?
+  content       String
+  notifications Notification[]
+}
+
+model UserPreferences {
+  id        String  @id @default(uuid())
+  userId    String
+  eventType String
+  channel   String
+  enabled   Boolean @default(true)
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@unique([userId, eventType, channel])
+}
+
+model Notification {
+  id            String @id @default(uuid())
+  userId        String
+  templateId    String
+  status        Status @default(PENDING)
+  payload       Json
+  correlationId String @unique
+  priority      Int    @default(0)
+
+  user     User                 @relation(fields: [userId], references: [id])
+  template NotificationTemplate @relation(fields: [templateId], references: [id])
+  logs     NotificationLog[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model NotificationLog {
+  id               String  @id @default(uuid())
+  notificationId   String
+  status           Status
+  channel          String
+  providerResponse Json?
+  errorMessage     String?
+
+  notification Notification @relation(fields: [notificationId], references: [id])
+
+  createdAt DateTime @default(now())
+}
