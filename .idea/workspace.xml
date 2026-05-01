@@ -4,7 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="edc64efe-47da-49c8-a071-6ca7ab2047d2" name="Changes" comment="" />
+    <list default="true" id="edc64efe-47da-49c8-a071-6ca7ab2047d2" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/notification-service/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/services/notification-service/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/notification-service/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/services/notification-service/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/notification-service/prisma/schema.prisma" beforeDir="false" afterPath="$PROJECT_DIR$/services/notification-service/prisma/schema.prisma" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/notification-service/src/app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/notification-service/src/app.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/notification-service/src/http/controller/user/create-user.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/notification-service/src/http/controller/user/create-user.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/notification-service/src/http/routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/notification-service/src/http/routes.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/notification-service/src/repositories/prisma-user-repository.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/notification-service/src/repositories/prisma-user-repository.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/notification-service/src/repositories/users-repository.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/notification-service/src/repositories/users-repository.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/notification-service/src/types/createUser.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/notification-service/src/types/createUser.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/notification-service/src/types/notification.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/notification-service/src/types/notification.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/notification-service/src/use-cases/createUser.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/notification-service/src/use-cases/createUser.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/notification-service/src/use-cases/factories/make-create-user.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/notification-service/src/use-cases/factories/make-create-user.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/notification-service/src/use-cases/sendNotification.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/notification-service/src/use-cases/sendNotification.ts" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -14,6 +29,12 @@
     <persistenceIdMap>
       <entry key="_/home/carloseduardo/Desktop/pastaProjetosGit/node/NotificationOrchestrator" value="3D56CKHGzH93D7x645zPCuow2ow" />
     </persistenceIdMap>
+  </component>
+  <component name="CopilotUserSelectedModel">
+    <selectedModels>
+      <entry key="agent-panel" value="GPT-5.2-Codex" />
+      <entry key="chat-panel" value="GPT-5.2-Codex" />
+    </selectedModels>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -25,11 +46,26 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;carlosEA28&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/carlosEA28/notificationOrchestrator.git&quot;,
+    &quot;accountId&quot;: &quot;26cdb9d1-29c4-4622-aa1f-e98c3d8c4a11&quot;
+  }
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1,
   &quot;fromUser&quot;: false
 }</component>
   <component name="ProjectId" id="3D56CKHGzH93D7x645zPCuow2ow" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -39,9 +75,10 @@
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "codeWithMe.voiceChat.enabledByDefault": "false",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "main",
     "javascript.preferred.runtime.type.id": "node",
     "last_opened_file_path": "/home/carloseduardo/Desktop/pastaProjetosGit/node/NotificationOrchestrator",
     "node.js.detected.package.eslint": "true",
@@ -52,6 +89,11 @@
     "settings.editor.selected.configurable": "preferences.lookFeel",
     "ts.external.directory.path": "/home/carloseduardo/Downloads/WebStorm-2026.1/WebStorm-261.22158.274/plugins/javascript-plugin/jsLanguageServicesImpl/external",
     "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
+    ]
   }
 }]]></component>
   <component name="RecentsManager">
@@ -74,7 +116,8 @@
       <option name="presentableId" value="Default" />
       <updated>1777559454847</updated>
       <workItem from="1777559456128" duration="8673000" />
-      <workItem from="1777580669236" duration="3885000" />
+      <workItem from="1777580669236" duration="15320000" />
+      <workItem from="1777602988145" duration="2270000" />
     </task>
     <servers />
   </component>

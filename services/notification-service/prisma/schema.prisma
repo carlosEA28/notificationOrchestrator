@@ -18,6 +18,7 @@ model User {
   id            String            @id @default(uuid())
   email         String            @unique
   phone         String?
+  pushToken     String?
   preferences   UserPreferences[]
   notifications Notification[]
 
