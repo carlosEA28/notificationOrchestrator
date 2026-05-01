@@ -1,11 +1,19 @@
-import {z} from "zod";
+import { z } from "zod";
 
-export const NotificationSchema= z.object({
-    notificationId: z.uuid(),
-    userId: z.string(),
-    payload: z.string(),
-    correlationId:z.string(),
-    priority:z.number(),
-})
+enum StatusSchema {
+  PENDING = "PENDING",
+  SENT = "SENT",
+  DELIVERED = "DELIVERED",
+  FAILED = "FAILED",
+}
 
-export type Notification = z.infer<typeof NotificationSchema>
+export const NotificationSchema = z.object({
+  userId: z.string().uuid(),
+  templateId: z.string().uuid(),
+  correlationId: z.string().min(1),
+  payload: z.any().optional(),
+  priority: z.number().int().min(0).max(10).optional(),
+  status: z.nativeEnum(StatusSchema).optional(),
+});
+
+export type NotificationDTO = z.infer<typeof NotificationSchema>;
