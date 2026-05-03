@@ -4,12 +4,13 @@ export class RabbitmqProvider{
     private connection?: ChannelModel
     private channel?: amqp.Channel
 
-    constructor(private url = "amqp://localhost") {}
+    constructor(private url = process.env.RABBITMQ_URL ?? "amqp://localhost") {}
 
     private async ensureConnected(){
         if (this.channel) {
             return
         }
+
 
         try {
             this.connection = await amqp.connect(this.url)
@@ -21,17 +22,21 @@ export class RabbitmqProvider{
         }
     }
 
-    async produce(queue:string, message: unknown, routingKey = queue){
+    async produce(exchange: string, message: unknown, routingKey = exchange, queueName?: string){
         await this.ensureConnected()
         const channel = this.channel
         if (!channel) {
             throw new Error("RabbitMQ channel not initialized")
         }
 
-        await channel.assertExchange(queue, "topic", { durable: true })
+        await channel.assertExchange(exchange, "topic", { durable: true })
+        if (queueName) {
+            await channel.assertQueue(queueName, { durable: true })
+            await channel.bindQueue(queueName, exchange, routingKey)
+        }
         const payload = Buffer.from(typeof message === "string" ? message : JSON.stringify(message))
-        channel.publish(queue, routingKey, payload, { persistent: true })
-        console.log(`Message published to exchange ${queue} with routing key ${routingKey}`)
+        channel.publish(exchange, routingKey, payload, { persistent: true })
+        console.log(`Message published to exchange ${exchange} with routing key ${routingKey}`)
     }
 
     async close(){

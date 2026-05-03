@@ -11,7 +11,7 @@ import (
 func Connect() (*sql.DB, error) {
 	dsn := os.Getenv("DATABASE_URL")
 	if dsn == "" {
-		dsn = "postgres://postgres:postgres@localhost:5433/notification_orchestrator?sslmode=disable"
+		dsn = "postgres://postgres:postgres@localhost:5432/notification_service?sslmode=disable"
 	}
 
 	db, err := sql.Open("postgres", dsn)

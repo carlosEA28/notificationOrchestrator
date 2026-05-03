@@ -33,7 +33,12 @@ export class SendNotificationUseCase {
 
     const notification = await this.notificationRepository.Create(params);
 
-    await this.rabbitmqProvider.produce("notification-created", notification);
+    await this.rabbitmqProvider.produce(
+      "notificationRequested",
+      notification,
+      "notificationRequested",
+      "notification.requested",
+    );
 
     return notification;
   }

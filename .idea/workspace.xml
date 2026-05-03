@@ -1,15 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="AutoImportSettings">
-    <option name="autoReloadType" value="SELECTIVE" />
+    <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="edc64efe-47da-49c8-a071-6ca7ab2047d2" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/infra/docker/docker-compose.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/notification-orchestrator-service/internal/dto/sendNotificationWorkerDTO.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/notification-orchestrator-service/internal/service/notification_processor.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/bc01f0c2-39b3-4b41-93d7-073e1ba2a701.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/bc01f0c2-39b3-4b41-93d7-073e1ba2a701.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/bc01f0c2-39b3-4b41-93d7-073e1ba2a701/storage_v2/_src_/database/notification_service.YdsXgg/schema/public.abK9xQ.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/bc01f0c2-39b3-4b41-93d7-073e1ba2a701/storage_v2/_src_/database/notification_service.YdsXgg/schema/public.abK9xQ.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/notification-service/src/http/routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/notification-service/src/http/routes.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/notification-service/src/repositories/prisma-user-repository.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/notification-service/src/types/notification.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/notification-service/src/types/notification.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/notification-service/src/use-cases/factories/make-create-user.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/notification-service/src/use-cases/factories/make-create-user.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/notification-orchestrator-service/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/services/notification-orchestrator-service/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/notification-orchestrator-service/cmd/app/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/notification-orchestrator-service/cmd/app/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/notification-orchestrator-service/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/services/notification-orchestrator-service/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/notification-orchestrator-service/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/services/notification-orchestrator-service/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/notification-orchestrator-service/internal/database/database.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/notification-orchestrator-service/internal/database/database.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/notification-orchestrator-service/tmp/build-errors.log" beforeDir="false" afterPath="$PROJECT_DIR$/services/notification-orchestrator-service/tmp/build-errors.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/notification-service/src/lib/rabbitmq.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/notification-service/src/lib/rabbitmq.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/notification-service/src/use-cases/sendNotification.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/notification-service/src/use-cases/sendNotification.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -32,9 +40,11 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="TypeScript File" />
+        <option value="Go Application" />
       </list>
     </option>
   </component>
+  <component name="GOROOT" url="file://$USER_HOME$/.local/share/mise/installs/go/1.26.1" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -64,14 +74,23 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;DefaultGoTemplateProperty&quot;: &quot;Go Application&quot;,
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.GoLinterPluginOnboardingV2&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.GoLinterPluginStorageMigration&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.analysis.ui.options.defaults&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.modules.go.list.on.any.changes.was.set&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
     &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;go.sdk.automatically.set&quot;: &quot;true&quot;,
     &quot;javascript.preferred.runtime.type.id&quot;: &quot;node&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;/home/carloseduardo/Desktop/pastaProjetosGit/node/NotificationOrchestrator&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -79,7 +98,8 @@
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/home/carloseduardo/Downloads/WebStorm-2026.1/WebStorm-261.22158.274/plugins/javascript-plugin/jsLanguageServicesImpl/external&quot;,
+    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/home/carloseduardo/Downloads/goland-2026.1/GoLand-2026.1/plugins/javascript-plugin/jsLanguageServicesImpl/external&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
   &quot;keyToStringList&quot;: {
@@ -111,6 +131,8 @@
       <workItem from="1777580669236" duration="15320000" />
       <workItem from="1777602988145" duration="2270000" />
       <workItem from="1777648304635" duration="4869000" />
+      <workItem from="1777743095402" duration="600000" />
+      <workItem from="1777836426850" duration="58000" />
     </task>
     <servers />
   </component>

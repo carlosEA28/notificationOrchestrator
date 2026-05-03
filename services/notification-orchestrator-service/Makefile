@@ -7,7 +7,7 @@ dev:
 	air
 
 migrate:
-	goose -dir=./migrations postgres "postgres://postgres:postgres@localhost:5433/notification_orchestrator?sslmode=disable" up
+	goose -dir=./migrations postgres "postgres://postgres:postgres@localhost:5432/notification_service?sslmode=disable" up
 
 create-migration:
 	@if [ -z "$(name)" ]; then \
@@ -17,4 +17,4 @@ create-migration:
 	goose -dir=./migrations create $(name) sql
 
 db-reset:
-	goose -dir=./migrations postgres "postgres://postgres:postgres@localhost:5433/notification_orchestrator?sslmode=disable" reset
+	goose -dir=./migrations postgres "postgres://postgres:postgres@localhost:5432/notification_service?sslmode=disable" reset

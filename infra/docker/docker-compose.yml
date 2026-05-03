@@ -1,0 +1,51 @@
+services:
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: notification-rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - notification-net
+
+  notification-service-db:
+    image: postgres:16-alpine
+    container_name: notification-service-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: notification_service
+    ports:
+      - "5432:5432"
+    volumes:
+      - notification_service_db_data:/var/lib/postgresql/data
+    networks:
+      - notification-net
+
+  notification-orchestrator-db:
+    image: postgres:16-alpine
+    container_name: notification-orchestrator-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: notification_orchestrator
+    ports:
+      - "5433:5432"
+    volumes:
+      - notification_orchestrator_db_data:/var/lib/postgresql/data
+    networks:
+      - notification-net
+
+volumes:
+  rabbitmq_data:
+  notification_service_db_data:
+  notification_orchestrator_db_data:
+
+networks:
+  notification-net:
+    driver: bridge
