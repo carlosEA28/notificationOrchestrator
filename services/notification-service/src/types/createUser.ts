@@ -1,4 +1,5 @@
-import {z} from "zod";
+import { z } from "zod";
+import { EventTypeSchema } from "./event-type";
 
 const isValidPtBrPhone = (value: string) => {
     let digits = value.replace(/\D/g, "")
@@ -27,16 +28,16 @@ const isValidPtBrPhone = (value: string) => {
 }
 
 export const userPreferences = z.object({
-    eventType: z.string(),
+    eventType: EventTypeSchema,
     channel: z.string(),
     enabled: z.boolean(),
-})
+});
 
 export const createUserSchema = z.object({
     email: z.string().email(),
     phone: z.string().refine(isValidPtBrPhone, { message: "Telefone pt-BR invalido" }),
     pushToken: z.string().optional(),
-    preferences: userPreferences
-})
+    preferences: userPreferences,
+});
 
 export type CreateUserDTO = z.infer<typeof createUserSchema>

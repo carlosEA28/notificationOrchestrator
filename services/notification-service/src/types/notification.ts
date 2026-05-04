@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { EventTypeSchema } from "./event-type";
 
 enum StatusSchema {
   PENDING = "PENDING",
@@ -14,6 +15,7 @@ export const NotificationSchema = z.object({
   payload: z.any().optional(),
   priority: z.number().int().min(0).max(10).optional(),
   status: z.nativeEnum(StatusSchema).optional(),
+  eventType: EventTypeSchema,
 });
 
 export type NotificationDTO = z.infer<typeof NotificationSchema>;

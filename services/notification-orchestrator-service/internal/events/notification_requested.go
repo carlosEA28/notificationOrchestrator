@@ -12,7 +12,7 @@ type NotificationRequested struct {
 	UserID         string                 `json:"userId"`
 	TemplateSlug   string                 `json:"templateSlug"`
 	TemplateID     string                 `json:"templateId,omitempty"`
-	EventType      string                 `json:"eventType"`
+	EventType      string                 `json:"eventType,omitempty"`
 	Payload        map[string]interface{} `json:"payload"`
 	Priority       int                    `json:"priority,omitempty"`
 	Timestamp      time.Time              `json:"timestamp"`

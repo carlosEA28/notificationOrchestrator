@@ -29,15 +29,15 @@ const (
 	`
 
 	queryGetTemplateBySlug = `
-		SELECT id, slug, channel, subject, content, "createdAt", "updatedAt"
+		SELECT "id", "slug", "channel", "subject", "content"
 		FROM "NotificationTemplate"
-		WHERE slug = $1
+		WHERE "slug" = $1
 	`
 
 	queryGetTemplateByID = `
-		SELECT id, slug, channel, subject, content, "createdAt", "updatedAt"
+		SELECT "id", "slug", "channel", "subject", "content"
 		FROM "NotificationTemplate"
-		WHERE id = $1
+		WHERE "id" = $1
 	`
 
 	queryUpdateStatus = `
@@ -104,7 +104,7 @@ func (r *SQLNotificationRepository) GetTemplateBySlug(ctx context.Context, slug 
 	var subject *string
 
 	err := r.db.QueryRow(ctx, queryGetTemplateBySlug, slug).Scan(
-		&tpl.ID, &tpl.Slug, &tpl.Channel, &subject, &tpl.Content, &tpl.CreatedAt, &tpl.UpdatedAt,
+		&tpl.ID, &tpl.Slug, &tpl.Channel, &subject, &tpl.Content,
 	)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get template: %w", err)
@@ -119,7 +119,7 @@ func (r *SQLNotificationRepository) GetTemplateByID(ctx context.Context, id stri
 	var subject *string
 
 	err := r.db.QueryRow(ctx, queryGetTemplateByID, id).Scan(
-		&tpl.ID, &tpl.Slug, &tpl.Channel, &subject, &tpl.Content, &tpl.CreatedAt, &tpl.UpdatedAt,
+		&tpl.ID, &tpl.Slug, &tpl.Channel, &subject, &tpl.Content,
 	)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get template by id: %w", err)

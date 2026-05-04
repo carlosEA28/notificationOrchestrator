@@ -35,7 +35,7 @@ export class SendNotificationUseCase {
 
     await this.rabbitmqProvider.produce(
       "notificationRequested",
-      notification,
+      { ...notification, eventType: params.eventType },
       "notificationRequested",
       "notification.requested",
     );

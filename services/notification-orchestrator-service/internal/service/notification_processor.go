@@ -4,9 +4,9 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/carlosEA28/notificationOrchestrator/internal/domain"
 	"github.com/carlosEA28/notificationOrchestrator/internal/events"
 	"github.com/carlosEA28/notificationOrchestrator/internal/repository"
-	"github.com/carlosEA28/notificationOrchestrator/internal/domain"
 )
 
 type NotificationProcessor struct {
@@ -22,6 +22,11 @@ func (p *NotificationProcessor) BuildPayload(ctx context.Context, event events.N
 	var template *domain.NotificationTemplate
 	var err error
 
+	eventType := event.EventType
+	if eventType == "" {
+		return nil, fmt.Errorf("evento incompleto: userId=%q eventType=%q templateSlug=%q", event.UserID, eventType, templateSlug)
+	}
+
 	if templateSlug == "" && event.TemplateID != "" {
 		template, err = p.repo.GetTemplateByID(ctx, event.TemplateID)
 		if err != nil {
@@ -30,12 +35,7 @@ func (p *NotificationProcessor) BuildPayload(ctx context.Context, event events.N
 		templateSlug = template.Slug
 	}
 
-	eventType := event.EventType
-	if eventType == "" {
-		eventType = templateSlug
-	}
-
-	if event.UserID == "" || eventType == "" || templateSlug == "" {
+	if event.UserID == "" || templateSlug == "" {
 		return nil, fmt.Errorf("evento incompleto: userId=%q eventType=%q templateSlug=%q", event.UserID, eventType, templateSlug)
 	}
 
