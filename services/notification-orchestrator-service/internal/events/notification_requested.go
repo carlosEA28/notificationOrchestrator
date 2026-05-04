@@ -10,12 +10,12 @@ type NotificationRequested struct {
 	ID             string                 `json:"id,omitempty"`
 	CorrelationID  string                 `json:"correlationId"`
 	UserID         string                 `json:"userId"`
-	TemplateSlug   string                 `json:"templateSlug"`
-	TemplateID     string                 `json:"templateId,omitempty"`
-	EventType      string                 `json:"eventType,omitempty"`
+	TemplateSlug   string                 `json:"templateSlug,omitempty"`
+	TemplateID     string                 `json:"templateId"`
+	EventType      string                 `json:"eventType"`
 	Payload        map[string]interface{} `json:"payload"`
 	Priority       int                    `json:"priority,omitempty"`
-	Timestamp      time.Time              `json:"timestamp"`
+	CreatedAt      time.Time              `json:"createdAt"`
 	Metadata       map[string]interface{} `json:"metadata,omitempty"`
 }
 
@@ -27,14 +27,14 @@ func NewNotificationRequested(notificationID, correlationID, userID, templateSlu
 		TemplateSlug:   templateSlug,
 		EventType:      eventType,
 		Payload:        payload,
-		Timestamp:      time.Now(),
+		CreatedAt:      time.Now(),
 	}
 }
 
 func (e *NotificationRequested) UnmarshalJSON(data []byte) error {
 	type Alias NotificationRequested
 	aux := &struct {
-		Timestamp string `json:"timestamp"`
+		CreatedAt string `json:"createdAt"`
 		*Alias
 	}{
 		Alias: (*Alias)(e),
@@ -42,9 +42,9 @@ func (e *NotificationRequested) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &aux); err != nil {
 		return err
 	}
-	if aux.Timestamp != "" {
-		if t, err := time.Parse(time.RFC3339, aux.Timestamp); err == nil {
-			e.Timestamp = t
+	if aux.CreatedAt != "" {
+		if t, err := time.Parse(time.RFC3339Nano, aux.CreatedAt); err == nil {
+			e.CreatedAt = t
 		}
 	}
 	if e.NotificationID == "" && e.ID != "" {

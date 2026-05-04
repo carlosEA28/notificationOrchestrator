@@ -71,10 +71,10 @@ func NewRabbitmqProvider() (*RabbitmqProvider, error) {
 	repo := repository.NewSQLNotificationRepository(dbPool)
 	processor := service.NewNotificationProcessor(repo)
 	return &RabbitmqProvider{
-		connUrl: connUrl,
-		conn:    conn,
-		channel: ch,
-		db:      dbPool,
+		connUrl:                connUrl,
+		conn:                   conn,
+		channel:                ch,
+		db:                     dbPool,
 		notificationRepository: repo,
 		processor:              processor,
 	}, nil
@@ -150,14 +150,30 @@ func (r *RabbitmqProvider) Consume(ctx context.Context, queueName, exchange, rou
 				continue
 			}
 
-			payload, err := r.processor.BuildPayload(ctx, event)
+			processed, err := r.processor.BuildPayload(ctx, event)
 			if err != nil {
 				log.Printf("Erro ao processar evento: %v", err)
 				continue
 			}
 
-			log.Printf("Event: %+v", event)
-			_ = payload
+			if processed == nil {
+				log.Printf("Mensagem ignorada: preferencia desabilitada userId=%s eventType=%s", event.UserID, event.EventType)
+				continue
+			}
+
+			payloadJSON, err := json.Marshal(processed.Payload)
+			if err != nil {
+				log.Printf("Erro ao serializar payload para entrega: %v", err)
+				continue
+			}
+
+			err = r.Produce("notification.delivery.queue", "notification.delivery.v1", processed.RoutingKey, payloadJSON)
+			if err != nil {
+				log.Printf("Erro ao publicar mensagem de entrega: %v", err)
+				continue
+			}
+
+			log.Printf("Mensagem encaminhada: correlationId=%s routingKey=%s", event.CorrelationID, processed.RoutingKey)
 		}
 	}()
 

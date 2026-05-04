@@ -3,6 +3,8 @@ package service
 import (
 	"context"
 	"fmt"
+	"strings"
+	"time"
 
 	"github.com/carlosEA28/notificationOrchestrator/internal/domain"
 	"github.com/carlosEA28/notificationOrchestrator/internal/events"
@@ -17,7 +19,16 @@ func NewNotificationProcessor(repo *repository.SQLNotificationRepository) *Notif
 	return &NotificationProcessor{repo: repo}
 }
 
-func (p *NotificationProcessor) BuildPayload(ctx context.Context, event events.NotificationRequested) (map[string]interface{}, error) {
+type DeliveryPayload struct {
+	Channel       string
+	RoutingKey    string
+	Payload       map[string]interface{}
+	TemplateSlug  string
+	TemplateID    string
+	CorrelationID string
+}
+
+func (p *NotificationProcessor) BuildPayload(ctx context.Context, event events.NotificationRequested) (*DeliveryPayload, error) {
 	templateSlug := event.TemplateSlug
 	var template *domain.NotificationTemplate
 	var err error
@@ -28,7 +39,10 @@ func (p *NotificationProcessor) BuildPayload(ctx context.Context, event events.N
 	}
 
 	if templateSlug == "" && event.TemplateID != "" {
-		template, err = p.repo.GetTemplateByID(ctx, event.TemplateID)
+		templateCtx, cancelTemplate := context.WithTimeout(ctx, 3*time.Second)
+		defer cancelTemplate()
+
+		template, err = p.repo.GetTemplateByID(templateCtx, event.TemplateID)
 		if err != nil {
 			return nil, fmt.Errorf("erro ao obter template por id: %w", err)
 		}
@@ -39,33 +53,67 @@ func (p *NotificationProcessor) BuildPayload(ctx context.Context, event events.N
 		return nil, fmt.Errorf("evento incompleto: userId=%q eventType=%q templateSlug=%q", event.UserID, eventType, templateSlug)
 	}
 
-	userWithPreferences, err := p.repo.GetUserWithPreferences(ctx, event.UserID, eventType)
+	dbCtx, cancel := context.WithTimeout(ctx, 3*time.Second)
+	defer cancel()
+
+	userWithPreferences, err := p.repo.GetUserWithPreferences(dbCtx, event.UserID, eventType)
 	if err != nil {
 		return nil, fmt.Errorf("erro ao obter usuário com preferências: %w", err)
 	}
 
-	if len(userWithPreferences.Preferences) == 0 {
-		return nil, fmt.Errorf("usuário sem preferências para eventType=%q", eventType)
-	}
-
-	if !userWithPreferences.Preferences[0].Enabled {
-		return nil, fmt.Errorf("preferência desabilitada para eventType=%q", eventType)
+	if !userWithPreferences.Enabled {
+		return nil, nil
 	}
 
 	if template == nil {
-		template, err = p.repo.GetTemplateBySlug(ctx, templateSlug)
+		templateCtx, cancelTemplate := context.WithTimeout(ctx, 3*time.Second)
+		defer cancelTemplate()
+		template, err = p.repo.GetTemplateBySlug(templateCtx, templateSlug)
 		if err != nil {
 			return nil, fmt.Errorf("erro ao obter template: %w", err)
 		}
 	}
 
-	finalPayload := map[string]interface{}{
-		"email":         userWithPreferences.User.Email,
-		"phone":         userWithPreferences.User.Phone,
-		"content":       template.Content,
-		"variables":     event.Payload,
-		"correlationId": event.CorrelationID,
+	content := replaceTemplateVariables(template.Content, event.Payload)
+
+	routingKey := ""
+	switch userWithPreferences.Channel {
+	case "email":
+		routingKey = "notification.delivery.email"
+	case "push":
+		routingKey = "notification.delivery.push"
+	default:
+		return nil, fmt.Errorf("canal não suportado: %q", userWithPreferences.Channel)
 	}
 
-	return finalPayload, nil
+	finalPayload := map[string]interface{}{
+		"email":         userWithPreferences.Email,
+		"phone":         userWithPreferences.Phone,
+		"pushToken":     userWithPreferences.PushToken,
+		"content":       content,
+		"variables":     event.Payload,
+		"correlationId": event.CorrelationID,
+		"channel":       userWithPreferences.Channel,
+		"eventType":     eventType,
+		"templateId":    event.TemplateID,
+		"templateSlug":  templateSlug,
+	}
+
+	return &DeliveryPayload{
+		Channel:       userWithPreferences.Channel,
+		RoutingKey:    routingKey,
+		Payload:       finalPayload,
+		TemplateSlug:  templateSlug,
+		TemplateID:    event.TemplateID,
+		CorrelationID: event.CorrelationID,
+	}, nil
+}
+
+func replaceTemplateVariables(content string, variables map[string]interface{}) string {
+	result := content
+	for key, value := range variables {
+		placeholder := "{{" + key + "}}"
+		result = strings.ReplaceAll(result, placeholder, fmt.Sprint(value))
+	}
+	return result
 }

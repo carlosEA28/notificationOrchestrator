@@ -4,14 +4,13 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="edc64efe-47da-49c8-a071-6ca7ab2047d2" name="Changes" comment="">
+    <list default="true" id="edc64efe-47da-49c8-a071-6ca7ab2047d2" name="Changes" comment="feat: ensure notification payload is being recived by notification_orchestrator service">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/notification-orchestrator-service/internal/events/notification_requested.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/notification-orchestrator-service/internal/events/notification_requested.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/notification-orchestrator-service/internal/lib/rabbitmq.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/notification-orchestrator-service/internal/lib/rabbitmq.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/notification-orchestrator-service/internal/repository/notification_repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/notification-orchestrator-service/internal/repository/notification_repository.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/notification-orchestrator-service/internal/repository/sql_notification_repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/notification-orchestrator-service/internal/repository/sql_notification_repository.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/notification-orchestrator-service/internal/service/notification_processor.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/notification-orchestrator-service/internal/service/notification_processor.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/notification-service/src/types/createUser.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/notification-service/src/types/createUser.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/notification-service/src/types/notification.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/notification-service/src/types/notification.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/notification-service/src/use-cases/sendNotification.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/notification-service/src/use-cases/sendNotification.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,12 +46,16 @@
     &quot;assignee&quot;: &quot;carlosEA28&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/carlosEA28/notificationOrchestrator.git&quot;,
-    &quot;accountId&quot;: &quot;26cdb9d1-29c4-4622-aa1f-e98c3d8c4a11&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/carlosEA28/notificationOrchestrator.git",
+    "accountId": "7fbe514d-fa7d-490a-a14e-6f5bea820374"
   }
-}</component>
+}]]></component>
+  <component name="KubernetesApiPersistence"><![CDATA[{}]]></component>
+  <component name="KubernetesApiProvider"><![CDATA[{
+  "isMigrated": true
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1,
   &quot;fromUser&quot;: false
@@ -132,6 +135,10 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="feat: ensure notification payload is being recived by notification_orchestrator service" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: ensure notification payload is being recived by notification_orchestrator service" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

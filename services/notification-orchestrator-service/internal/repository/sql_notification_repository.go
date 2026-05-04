@@ -21,11 +21,11 @@ func NewSQLNotificationRepository(db *pgxpool.Pool) *SQLNotificationRepository {
 const (
 	queryGetUserWithPreferences = `
 		SELECT 
-			u.id, u.email, u.phone, u."pushToken", u."createdAt", u."updatedAt",
-			up.id, up."userId", up."eventType", up.channel, up.enabled
+			u.email, u.phone, u."pushToken",
+			up.enabled, up.channel
 		FROM "User" u
-		LEFT JOIN "UserPreferences" up ON up."userId" = u.id AND up."eventType" = $2
-		WHERE u.id = $1
+		INNER JOIN "UserPreferences" up ON up."userId" = u.id
+		WHERE u.id = $1 AND up."eventType" = $2
 	`
 
 	queryGetTemplateBySlug = `
@@ -47,56 +47,34 @@ const (
 	`
 )
 
-func (r *SQLNotificationRepository) GetUserWithPreferences(ctx context.Context, userID string, eventType string) (*domain.UserWithPreferences, error) {
+type UserPreferenceResult struct {
+	Email     string
+	Phone     *string
+	PushToken *string
+	Enabled   bool
+	Channel   string
+}
+
+func (r *SQLNotificationRepository) GetUserWithPreferences(ctx context.Context, userID string, eventType string) (*UserPreferenceResult, error) {
 	rows, err := r.db.Query(ctx, queryGetUserWithPreferences, userID, eventType)
 	if err != nil {
 		return nil, fmt.Errorf("failed to query user with preferences: %w", err)
 	}
 	defer rows.Close()
 
-	var user domain.User
-	var preferences []domain.UserPreferences
-	hasRow := false
-
-	for rows.Next() {
-		hasRow = true
-		var pref domain.UserPreferences
-		var phone, pushToken, prefID, prefUserID, prefEventType, prefChannel *string
-		var prefEnabled *bool
-
-		err := rows.Scan(
-			&user.ID, &user.Email, &phone, &pushToken, &user.CreatedAt, &user.UpdatedAt,
-			&prefID, &prefUserID, &prefEventType, &prefChannel, &prefEnabled,
-		)
-		if err != nil {
+	if rows.Next() {
+		var result UserPreferenceResult
+		if err := rows.Scan(&result.Email, &result.Phone, &result.PushToken, &result.Enabled, &result.Channel); err != nil {
 			return nil, fmt.Errorf("failed to scan row: %w", err)
 		}
-
-		user.Phone = phone
-		user.PushToken = pushToken
-
-		if prefID != nil {
-			pref.ID = *prefID
-			pref.UserID = *prefUserID
-			pref.EventType = *prefEventType
-			pref.Channel = *prefChannel
-			pref.Enabled = *prefEnabled
-			preferences = append(preferences, pref)
-		}
+		return &result, nil
 	}
 
 	if err := rows.Err(); err != nil {
 		return nil, fmt.Errorf("error iterating rows: %w", err)
 	}
 
-	if !hasRow {
-		return nil, pgx.ErrNoRows
-	}
-
-	return &domain.UserWithPreferences{
-		User:        user,
-		Preferences: preferences,
-	}, nil
+	return nil, pgx.ErrNoRows
 }
 
 func (r *SQLNotificationRepository) GetTemplateBySlug(ctx context.Context, slug string) (*domain.NotificationTemplate, error) {
