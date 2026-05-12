@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="dataSourceStorageLocal" created-in="GO-261.22158.291">
+  <component name="dataSourceStorageLocal" created-in="GO-261.23567.143">
     <data-source name="notification_service@localhost" uuid="bc01f0c2-39b3-4b41-93d7-073e1ba2a701">
       <database-info product="PostgreSQL" version="16.13" jdbc-version="4.2" driver-name="PostgreSQL JDBC Driver" driver-version="42.7.3" dbms="POSTGRES" exact-version="16.13" exact-driver-version="42.7">
         <identifier-quote-string>&quot;</identifier-quote-string>

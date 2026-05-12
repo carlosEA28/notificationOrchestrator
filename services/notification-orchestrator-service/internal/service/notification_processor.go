@@ -82,6 +82,8 @@ func (p *NotificationProcessor) BuildPayload(ctx context.Context, event events.N
 		routingKey = "notification.delivery.email"
 	case "push":
 		routingKey = "notification.delivery.push"
+	case "sms":
+		routingKey = "notification.delivery.sms"
 	default:
 		return nil, fmt.Errorf("canal não suportado: %q", userWithPreferences.Channel)
 	}
@@ -110,8 +112,13 @@ func (p *NotificationProcessor) BuildPayload(ctx context.Context, event events.N
 }
 
 func replaceTemplateVariables(content string, variables map[string]interface{}) string {
+	if content == "" {
+		return ""
+	}
+
 	result := content
 	for key, value := range variables {
+		// fmt.Sprint garante que mesmo números ou booleanos virem string
 		placeholder := "{{" + key + "}}"
 		result = strings.ReplaceAll(result, placeholder, fmt.Sprint(value))
 	}

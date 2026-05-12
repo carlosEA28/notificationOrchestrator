@@ -1,0 +1,150 @@
+openapi: 3.0.3
+info:
+  title: Notification Service API
+  version: 1.0.0
+  description: |
+    API for creating users and requesting notifications.
+servers:
+  - url: http://localhost:3000
+paths:
+  /users:
+    post:
+      summary: Create a user with preferences
+      operationId: createUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateUserRequest"
+            examples:
+              default:
+                value:
+                  email: carlos@example.com
+                  phone: "+55 11 98888-7777"
+                  pushToken: "push_token_optional"
+                  preferences:
+                    eventType: transactional
+                    channel: sms
+                    enabled: true
+      responses:
+        "201":
+          description: Created
+        "400":
+          description: Validation or domain error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /notifications:
+    post:
+      summary: Request a notification
+      operationId: sendNotification
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NotificationRequest"
+            examples:
+              transactionalSms:
+                value:
+                  userId: "5478834a-c387-4a30-800a-bd1a4e0111c3"
+                  templateId: "cc6de91d-8d01-4221-bf97-8690822539df"
+                  eventType: transactional
+                  correlationId: test_welcome
+                  payload:
+                    name: Carlos Eduardo
+                    product: Assinatura Pro
+                    value: "R$ 150,00"
+      responses:
+        "201":
+          description: Created
+        "400":
+          description: Validation or domain error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+components:
+  schemas:
+    CreateUserRequest:
+      type: object
+      required:
+        - email
+        - phone
+        - preferences
+      properties:
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
+          description: Phone number in pt-BR format.
+        pushToken:
+          type: string
+          nullable: true
+        preferences:
+          $ref: "#/components/schemas/UserPreferences"
+    UserPreferences:
+      type: object
+      required:
+        - eventType
+        - channel
+        - enabled
+      properties:
+        eventType:
+          $ref: "#/components/schemas/EventType"
+        channel:
+          type: string
+          enum: [email, push, sms]
+        enabled:
+          type: boolean
+    NotificationRequest:
+      type: object
+      required:
+        - userId
+        - templateId
+        - eventType
+        - correlationId
+        - payload
+      properties:
+        userId:
+          type: string
+          format: uuid
+        templateId:
+          type: string
+          format: uuid
+        eventType:
+          $ref: "#/components/schemas/EventType"
+        correlationId:
+          type: string
+        payload:
+          type: object
+          additionalProperties: true
+    EventType:
+      type: string
+      enum: [transactional, marketing]
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        issues:
+          type: array
+          items:
+            type: object
+
+
